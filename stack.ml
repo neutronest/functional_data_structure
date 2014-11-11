@@ -10,6 +10,9 @@ module type STACK =
     val cons : 'a stack -> 'a
     val head : 'a stack -> 'a
     val tail : 'a stack -> 'a stack
+    val push : 'a stack -> 'a -> 'a stack
+    val pop : 'a stack -> 'a stack
+    val top : 'a stack -> 'a
     val (++) 'a stack -> 'a stack -> 'a stack
     val update 'a stack -> int -> 'a -> 'a stack
   end
@@ -31,6 +34,21 @@ module ListStack : STACK =
     let tail = function
       | [] -> raise empty
       | _ :: t -> t
+
+    let push s x =
+      match s with
+      | [] -> [x]
+      | h :: t -> x :: (h :: t)
+
+    let pop s =
+      match s with
+      | [] -> raise empty
+      | h :: t -> t
+
+    let top s =
+      match s with
+      | [] -> raise empty
+      | h :: _  -> h
 
     let rec (++) xs ys =
       match xs with
