@@ -1,5 +1,6 @@
 exception Empty
 exception Subscript
+open Printf
 
 module type STACK =
   sig
@@ -7,14 +8,14 @@ module type STACK =
 
     val empty : 'a stack
     val is_empty : 'a stack -> bool
-    val cons : 'a stack -> 'a
+    val cons : 'a -> 'a stack -> 'a stack
     val head : 'a stack -> 'a
     val tail : 'a stack -> 'a stack
     val push : 'a stack -> 'a -> 'a stack
     val pop : 'a stack -> 'a stack
     val top : 'a stack -> 'a
-    val (++) 'a stack -> 'a stack -> 'a stack
-    val update 'a stack -> int -> 'a -> 'a stack
+    val (++):  'a stack -> 'a stack -> 'a stack
+    val update: 'a stack -> int -> 'a -> 'a stack
   end
 
 module ListStack : STACK =
@@ -28,11 +29,11 @@ module ListStack : STACK =
     let cons x s = x :: s
 
     let head = function
-      | [] -> raise empty
+      | [] -> raise Empty
       | h :: _ -> h
 
     let tail = function
-      | [] -> raise empty
+      | [] -> raise Empty
       | _ :: t -> t
 
     let push s x =
@@ -42,12 +43,12 @@ module ListStack : STACK =
 
     let pop s =
       match s with
-      | [] -> raise empty
+      | [] -> raise Empty
       | h :: t -> t
 
     let top s =
       match s with
-      | [] -> raise empty
+      | [] -> raise Empty
       | h :: _  -> h
 
     let rec (++) xs ys =
@@ -62,7 +63,3 @@ module ListStack : STACK =
          if i = 0 then x :: t else update t (i-1) x
 
   end
-
-module CustomStack :: STACK =
-
-end
